@@ -11,10 +11,10 @@ class PiConnect:
         print(result)
     
     def connect_to_server(self):
-        rospy.wait_for_service('pi_connect_master')
+        rospy.wait_for_service('nest_pi_connect_master')
         try:
-            pi_connect_client = rospy.ServiceProxy('pi_connect_master', masterConnect)
-            pi_connect_res = pi_connect_client(1)
+            pi_connect_client = rospy.ServiceProxy('nest_pi_connect_master', masterConnect)
+            pi_connect_res = pi_connect_client('NEST11014')
             return pi_connect_res.verified
         except rospy.ServiceException as e:
             print("Connection to server failed")
