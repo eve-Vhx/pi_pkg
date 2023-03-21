@@ -1,3 +1,3 @@
 <launch>
-    <node pkg="pi_pkg" name="pi_client_connect_node" type="pi_client_connect.py" output="screen"></node>
+    <node pkg="pi_pkg" name="pi_client_connect_nest_node" type="pi_client_connect_nest.py" output="screen"></node>
 </launch>
