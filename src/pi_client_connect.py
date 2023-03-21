@@ -1,17 +1,32 @@
 #!/usr/bin/env python3
 import rospy
 from msg_pkg.srv import masterConnect
+from msg_pkg.msg import uiMasterList
 
 class PiConnect:
 
     def __init__(self):
         rospy.init_node("pi_connect_node")
-        print("Ready to connect to the server")
-        result = self.connect_to_server()
-        print(result)
+        self.id = 'NEST11014'
+        self.master_list = []
+        rospy.Subscriber('nest_master_list', uiMasterList, self.master_list_cb)
+        self.run_routine()
+
+    def master_list_cb(self,msg):
+        self.master_list = msg.ui_master_list
+
+    def run_routine(self):
+        while (not rospy.is_shutdown()):
+            exists = False
+            for id_ in self.master_list:
+                if (id_ == self.id):
+                    exists = True
+
+            if not exists:
+                self.connect_to_server()
     
     def connect_to_server(self):
-        rospy.wait_for_service('nest_pi_connect_master')
+        rospy.wait_for_service('nest_pi_connect_master', timeout=rospy.Duration(3))
         try:
             pi_connect_client = rospy.ServiceProxy('nest_pi_connect_master', masterConnect)
             pi_connect_res = pi_connect_client('NEST11014')
