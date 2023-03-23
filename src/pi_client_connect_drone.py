@@ -7,7 +7,7 @@ class PiConnectNest:
 
     def __init__(self):
         rospy.init_node("pi_connect_drone_node")
-        self.id = 'QROW11021'
+        self.id = self.id = rospy.get_param("~id")
         self.master_list = []
         rospy.Subscriber('drone_master_list', uiMasterList, self.master_list_cb)
         self.run_routine()

@@ -1,3 +1,6 @@
 <launch>
-    <node pkg="pi_pkg" name="pi_client_connect_drone_node" type="pi_client_connect_drone.py" output="screen"></node>
+    <arg name="input_id" default="QROW11021"/>
+    <node pkg="pi_pkg" name="pi_client_connect_drone_node" type="pi_client_connect_drone.py" output="screen">
+           <param name="id" value="$(arg input_id)" /> 
+           </node>
 </launch>
